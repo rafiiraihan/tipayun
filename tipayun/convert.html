@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/css/tpy.css" />
+    <link rel="icon" type="image/x-icon" href="assets/img/fav/favicon.ico" />
+    <title>TPY Converter</title>
+  </head>
+  <body>
+    <h1>Konversi koordinat</h1>
+    <form>
+      <label for="coordinates">Koordinat:</label>
+      <input type="text" id="coordinates" name="coordinates" />
+      <br /><br />
+      <label for="nama_halte">Nama Halte:</label>
+      <input type="text" id="nama_halte" name="nama_halte" />
+      <br /><br />
+      <label for="jenis">Jenis:</label>
+      <br />
+      <input type="radio" id="halte" name="jenis" value="Halte" checked />
+      <label for="halte">Halte</label>
+      <br />
+      <input type="radio" id="stop" name="jenis" value="Stop" />
+      <label for="stop">Stop</label>
+      <br /><br />
+      <input type="button" value="Konversi" onclick="convertCoordinates()" />
+    </form>
+    <br /><br />
+    <div id="result"></div>
+    <script>
+      function convertCoordinates() {
+        var coordinatesInput = document.getElementById("coordinates").value;
+        var namaHalteInput = document.getElementById("nama_halte").value;
+        var jenisInput = document.querySelector(
+          'input[name="jenis"]:checked'
+        ).value;
+        var coordinates = coordinatesInput.split(",");
+        var lat = parseFloat(coordinates[0]).toFixed(5);
+        var long = parseFloat(coordinates[1]).toFixed(5);
+        var sqlQuery =
+          "INSERT INTO tpy_halte (nama_halte, lat, lng, jenis) VALUES ('" +
+          namaHalteInput +
+          "', " +
+          lat +
+          ", " +
+          long +
+          ", '" +
+          jenisInput +
+          "');";
+        document.getElementById("result").innerHTML = sqlQuery;
+      }
+    </script>
+  </body>
+</html>
